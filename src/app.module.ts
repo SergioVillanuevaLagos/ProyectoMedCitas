@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DoctorModule } from './doctor/doctor.module';
 import { UsuarioModule } from './usuario/usuario.module';
-import { EspecialidadModule } from './especialidad/especialidad.module';
 import { DoctorModule } from './doctor/doctor.module';
 
 @Module({
-  imports: [DoctorModule, EspecialidadModule, UsuarioModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'database.sqlite', // o ':memory:' para BD en memoria (datos se pierden al reiniciar)
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true, // útil en desarrollo; NO usar en producción
+    }),
+    DoctorModule,
+    UsuarioModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
