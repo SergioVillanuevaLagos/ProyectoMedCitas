@@ -1,4 +1,19 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateDoctorDto } from './create-doctor.dto';
 
-export class UpdateDoctorDto extends PartialType(CreateDoctorDto) {}
+import { IsOptional, IsString, IsUUID } from "class-validator";
+
+export class UpdateDoctorDto {
+
+    @IsString()
+    @IsUUID()
+    @IsOptional()
+    readonly id?: string;
+
+    @IsString()
+    @IsOptional()
+    readonly nombre?: string;
+
+    @IsString()
+    @IsOptional()
+    readonly especialidad?: string;
+
+}
