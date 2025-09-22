@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Cita } from '../../cita/entities/cita.entity';
 
+@Entity()
 export class Paciente {
-
-
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
@@ -11,24 +11,23 @@ export class Paciente {
 
     @Column()
     apellidos: string;
+    
     @Column()
     fechaNacimiento: Date;
+    
     @Column()
-    direccion: string
+    direccion: string;
+    
     @Column()
-    telefono: string
+    telefono: string;
+    
     @Column()
-    email: string
+    email: string;
+    
     @Column()
     updatedAt: number;
-    
 
-
-    
-
-
-
-
-
+    @OneToMany(() => Cita, cita => cita.paciente)
+    citas: Cita[];
 }
 

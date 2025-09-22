@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Cita } from "../../cita/entities/cita.entity";
 
 @Entity()
 export class Doctor { 
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
     @Column()
     nombre: string;
@@ -12,5 +13,6 @@ export class Doctor {
     @Column()
     horasLibres: string;
 
-
+    @OneToMany(() => Cita, cita => cita.doctor)
+    citas: Cita[];
 }

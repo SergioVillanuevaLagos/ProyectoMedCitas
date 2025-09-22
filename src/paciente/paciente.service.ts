@@ -9,22 +9,14 @@ export class PacienteService {
 
   private pacientes: Paciente[] = [];
   
- 
-
-
- 
+  
   fillBrandsWithSeedData(pacientes: Paciente[]){
     this.pacientes = pacientes;
   }
  
 
-
-
-
-
-
   create(createPacienteDto: CreatePacienteDto) {
-    const paciente: Paciente= {
+    const paciente: Paciente = {
       id: uuid(),
       nombre: createPacienteDto.nombre.toLocaleLowerCase(),
       apellidos: createPacienteDto.apellidos.toLocaleLowerCase(),
@@ -33,7 +25,8 @@ export class PacienteService {
       telefono: createPacienteDto.telefono,
       email: createPacienteDto.email,
       updatedAt: new Date().getTime(),
-    }
+      citas: [], // Inicializamos como un arreglo vacío
+    };
     this.pacientes.push(paciente);
     return paciente;
 
@@ -72,6 +65,6 @@ export class PacienteService {
     this.pacientes = this.pacientes.filter(brand => brand.id !== id);
   }
 }
-  
+
 
 
