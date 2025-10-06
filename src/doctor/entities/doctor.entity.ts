@@ -13,7 +13,7 @@ export class Doctor {
     @Column()
     especialidad: string;
 
-    @Column({ default: '[]' }) // Valor predeterminado como un array vacío
+    @Column({ default: '[]' })
     horasLibres: string;
 
     @OneToMany(() => Cita, cita => cita.doctor)

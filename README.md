@@ -21,7 +21,7 @@ POST http://localhost:3000/usuario
 ```
 
 
-### 3. Crear un Paciente
+### 2. Crear un Paciente
 
 ```
 POST http://localhost:3000/paciente
@@ -40,7 +40,7 @@ POST http://localhost:3000/paciente
 }
 ```
 
-### 4. Obtener Todos los Pacientes
+### 3. Obtener Todos los Pacientes
 
 ```
 GET http://localhost:3000/paciente
@@ -64,7 +64,7 @@ GET http://localhost:3000/paciente
 ]
 ```
 
-### 5. Crear un Doctor
+### 4. Crear un Doctor
 
 ```
 POST http://localhost:3000/doctor
@@ -79,7 +79,7 @@ POST http://localhost:3000/doctor
 }
 ```
 
-### 6. Crear una Cita
+### 5. Crear una Cita
 
 ```
 POST http://localhost:3000/cita
@@ -97,13 +97,6 @@ POST http://localhost:3000/cita
 }
 ```
 
-## Ruta para Probar la API
-
-La API puede ser probada localmente en la siguiente URL:
-
-```
-http://localhost:3000
-```
 
 ## Instalación
 
@@ -112,9 +105,4 @@ http://localhost:3000
 3. Configura la base de datos en el archivo `src/app.module.ts`.
 4. Inicia el servidor con `npm run start:dev`.
 
-## Tecnologías Utilizadas
 
-- NestJS
-- TypeORM
-- SQLite
-- TypeScript
