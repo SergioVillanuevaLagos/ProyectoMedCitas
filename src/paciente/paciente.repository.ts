@@ -14,8 +14,8 @@ export class PacienteRepository {
         return this.pacienteRepo.find();
     }
 
-    async findById(id: number): Promise<Paciente | null> {
-        return this.pacienteRepo.findOne({ where: { id: id.toString() } });
+    async findById(id: string): Promise<Paciente | null> {
+        return this.pacienteRepo.findOne({ where: { id } });
     }
 
     async create(pacienteData: Partial<Paciente>): Promise<Paciente> {
@@ -23,12 +23,12 @@ export class PacienteRepository {
         return this.pacienteRepo.save(paciente);
     }
 
-    async update(id: number, updateData: Partial<Paciente>): Promise<Paciente | null> {
+    async update(id: string, updateData: Partial<Paciente>): Promise<Paciente | null> {
         await this.pacienteRepo.update(id, updateData);
         return this.findById(id);
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: string): Promise<void> {
         await this.pacienteRepo.delete(id);
     }
 }

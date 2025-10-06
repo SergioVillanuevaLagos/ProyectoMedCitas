@@ -47,18 +47,18 @@ export class PacienteService {
   update(id: string, updatePacienteDto: UpdatePacienteDto) {
     let pacienteDB = this.findOne(id);
     this.pacientes = this.pacientes.map(p => {
-        if(p.id === id){
-          pacienteDB.updatedAt = new Date().getTime();
-          pacienteDB = {
-            ...pacienteDB,
-            ...updatePacienteDto,
-            id,
-            updatedAt: new Date().getTime()
-          }
-        }
-        return p;
-      });
-      return pacienteDB;
+      if (p.id === id) {
+        pacienteDB.updatedAt = new Date().getTime(); // Actualiza el timestamp
+        pacienteDB = {
+          ...pacienteDB,
+          ...updatePacienteDto,
+          id,
+          updatedAt: new Date().getTime(),
+        };
+      }
+      return p;
+    });
+    return pacienteDB;
   }
 
   remove(id: string) {
