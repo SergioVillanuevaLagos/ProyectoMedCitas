@@ -1,33 +1,36 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Cita } from '../../cita/entities/cita.entity';
 
 @Entity()
 export class Paciente {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    nombre: string;
+  @Column()
+  nombre: string;
 
-    @Column()
-    apellidos: string;
-    
-    @Column()
-    fechaNacimiento: Date;
-    
-    @Column()
-    direccion: string;
-    
-    @Column()
-    telefono: string;
-    
-    @Column()
-    email: string;
-    
-    @Column()
-    updatedAt: number;
+  @Column()
+  apellidos: string;
 
-    @OneToMany(() => Cita, cita => cita.paciente)
-    citas: Cita[];
+  @Column('date')
+  fechaNacimiento: Date;
+
+  @Column()
+  direccion: string;
+
+  @Column()
+  telefono: string;
+
+  @Column()
+  email: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @OneToMany(() => Cita, cita => cita.paciente)
+  citas: Cita[];
 }
 

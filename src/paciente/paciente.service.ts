@@ -1,68 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
+import { PacienteRepository } from './paciente.repository';
 import { Paciente } from './entities/paciente.entity';
-import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class PacienteService {
+  constructor(private readonly pacienteRepository: PacienteRepository) {}
 
-  private pacientes: Paciente[] = [];
-  
-  
-  fillBrandsWithSeedData(pacientes: Paciente[]){
-    this.pacientes = pacientes;
-  }
- 
-
-  create(createPacienteDto: CreatePacienteDto) {
-    const paciente: Paciente = {
-      id: uuid(),
-      nombre: createPacienteDto.nombre.toLocaleLowerCase(),
-      apellidos: createPacienteDto.apellidos.toLocaleLowerCase(),
-      fechaNacimiento: createPacienteDto.fechaNacimiento,
-      direccion: createPacienteDto.direccion,
-      telefono: createPacienteDto.telefono,
-      email: createPacienteDto.email,
-      updatedAt: new Date().getTime(),
-      citas: [], // Inicializamos como un arreglo vacío
-    };
-    this.pacientes.push(paciente);
-    return paciente;
-
-    
+  async create(createPacienteDto: CreatePacienteDto): Promise<Paciente> {
+    return this.pacienteRepository.create(createPacienteDto);
   }
 
-  findAll() {
-    return this.pacientes
+  async findAll(): Promise<Paciente[]> {
+    return this.pacienteRepository.findAll();
   }
 
-  findOne(id: string) {
-    const paciente = this.pacientes.find(p => p.id === id);
-    if(!paciente)
-    {throw new NotFoundException(`Brand with id ${id} not found`)}
+  async findOne(id: string): Promise<Paciente> {
+    const paciente = await this.pacienteRepository.findById(id);
+    if (!paciente) {
+      throw new NotFoundException(`Paciente with id ${id} not found`);
+    }
     return paciente;
   }
 
-  update(id: string, updatePacienteDto: UpdatePacienteDto) {
-    let pacienteDB = this.findOne(id);
-    this.pacientes = this.pacientes.map(p => {
-      if (p.id === id) {
-        pacienteDB.updatedAt = new Date().getTime(); // Actualiza el timestamp
-        pacienteDB = {
-          ...pacienteDB,
-          ...updatePacienteDto,
-          id,
-          updatedAt: new Date().getTime(),
-        };
-      }
-      return p;
-    });
-    return pacienteDB;
+  async update(id: string, updatePacienteDto: UpdatePacienteDto): Promise<Paciente> {
+    // No incluir updatedAt - TypeORM lo maneja automáticamente con @UpdateDateColumn
+    const paciente = await this.pacienteRepository.update(id, updatePacienteDto);
+    if (!paciente) {
+      throw new NotFoundException(`Paciente with id ${id} not found`);
+    }
+    return paciente;
   }
 
-  remove(id: string) {
-    this.pacientes = this.pacientes.filter(brand => brand.id !== id);
+  async remove(id: string): Promise<void> {
+    await this.pacienteRepository.delete(id);
   }
 }
 

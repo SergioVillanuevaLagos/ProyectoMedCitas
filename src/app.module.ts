@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsuarioModule } from './usuario/usuario.module';
@@ -12,11 +13,18 @@ import { Cita } from './cita/entities/cita.entity';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.sqlite',
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
       entities: [Doctor, Paciente, Cita],
-      synchronize: true,
+      synchronize: true, 
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      logging: true,
     }),
     UsuarioModule,
     DoctorModule,

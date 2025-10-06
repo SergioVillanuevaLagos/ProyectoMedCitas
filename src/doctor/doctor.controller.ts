@@ -19,23 +19,16 @@ export class DoctorController {
 
   @Get(':id')
   getDoctorById(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
     return this.doctorService.findOneById(id);
   }
 
-  @Post()
-  createDoctor(@Body() CreateDoctorDto: CreateDoctorDto) {
-    return this.doctorService.create(CreateDoctorDto);
-  }
-
-
   @Patch(':id')
-  update
-    (@Param('id', ParseUUIDPipe) id: string,
-      @Body() UpdateDoctorDto: UpdateDoctorDto) {
-    return this.doctorService.update(id, UpdateDoctorDto);
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateDoctorDto: UpdateDoctorDto
+  ) {
+    return this.doctorService.update(id, updateDoctorDto);
   }
-
 
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
