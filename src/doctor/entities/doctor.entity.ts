@@ -6,11 +6,14 @@ export class Doctor {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
     @Column()
     nombre: string;
+
     @Column()
     especialidad: string;
-    @Column()
+
+    @Column({ default: '[]' }) // Valor predeterminado como un array vacío
     horasLibres: string;
 
     @OneToMany(() => Cita, cita => cita.doctor)

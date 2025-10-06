@@ -20,19 +20,6 @@ POST http://localhost:3000/usuario
 }
 ```
 
-### 2. Obtener Todos los Usuarios
-
-```
-GET http://localhost:3000/usuario
-```
-
-**Ejemplo de Respuesta:**
-
-```json
-{
-  "message": "This action returns all usuario"
-}
-```
 
 ### 3. Crear un Paciente
 
