@@ -2,6 +2,12 @@
 
 Este proyecto es una API para la gestión de citas médicas, pacientes, doctores y usuarios.
 
+# Tecnología
+
+- Backend: NestJS
+- Frontend: React
+- Base de datos: Postgres
+
 ## Endpoints Implementados
 
 ### 1. Crear un Usuario
@@ -19,7 +25,6 @@ POST http://localhost:3000/usuario
   "email": "juan.perez@example.com"
 }
 ```
-
 
 ### 2. Crear un Paciente
 
@@ -97,12 +102,9 @@ POST http://localhost:3000/cita
 }
 ```
 
-
 ## Instalación
 
 1. Clona el repositorio.
 2. Instala las dependencias con `npm install`.
 3. Configura la base de datos en el archivo `src/app.module.ts`.
 4. Inicia el servidor con `npm run start:dev`.
-
-
