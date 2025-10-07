@@ -1,11 +1,35 @@
-import { Brand } from "src/brands/entities/brand.entity";
+import { Doctor } from "src/doctor/entities/doctor.entity";
 import { v4 as uuid } from 'uuid';
 
-
-export const BRANDS_SEED: Brand[] = [
-    { id: uuid(), name: 'Volvo', createdAt: new Date().getTime() },
-    { id: uuid(), name: 'Toyota', createdAt: new Date().getTime() },
-    { id: uuid(), name: 'Honda', createdAt: new Date().getTime() },
-    { id: uuid(), name: 'Jeep', createdAt: new Date().getTime() },
-    { id: uuid(), name: 'Tesla', createdAt: new Date().getTime() },
+export const DOCTORES_SEED: Partial<Doctor>[] = [
+    {
+        id: uuid(),
+        nombre: 'Dr. López',
+        especialidad: 'Cardiología',
+        horasLibres: '[]',
+    },
+    {
+        id: uuid(),
+        nombre: 'Dra. Pérez',
+        especialidad: 'Neurología',
+        horasLibres: '[]',
+    },
+    {
+        id: uuid(),
+        nombre: 'Dr. García',
+        especialidad: 'Dermatología',
+        horasLibres: '[]',
+    },
+    {
+        id: uuid(),
+        nombre: 'Dra. Martínez',
+        especialidad: 'Pediatría',
+        horasLibres: '[]',
+    },
+    {
+        id: uuid(),
+        nombre: 'Dr. Rodríguez',
+        especialidad: 'Traumatología',
+        horasLibres: '[]',
+    },
 ];
