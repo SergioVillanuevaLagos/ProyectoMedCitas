@@ -10,23 +10,9 @@ Este proyecto es una API para la gestión de citas médicas, pacientes, doctores
 
 ## Endpoints Implementados
 
-### 1. Crear un Usuario
 
-```
-POST http://localhost:3000/usuario
-```
 
-**Ejemplo de Cuerpo de la Solicitud:**
-
-```json
-{
-  "nombre": "Juan",
-  "apellidos": "Pérez",
-  "email": "juan.perez@example.com"
-}
-```
-
-### 2. Crear un Paciente
+### 1. Crear un Paciente
 
 ```
 POST http://localhost:3000/paciente
@@ -45,7 +31,7 @@ POST http://localhost:3000/paciente
 }
 ```
 
-### 3. Obtener Todos los Pacientes
+### 2. Obtener Todos los Pacientes
 
 ```
 GET http://localhost:3000/paciente
@@ -69,7 +55,7 @@ GET http://localhost:3000/paciente
 ]
 ```
 
-### 4. Crear un Doctor
+### 3. Crear un Doctor
 
 ```
 POST http://localhost:3000/doctor
@@ -84,7 +70,7 @@ POST http://localhost:3000/doctor
 }
 ```
 
-### 5. Crear una Cita
+### 4. Crear una Cita
 
 ```
 POST http://localhost:3000/cita
