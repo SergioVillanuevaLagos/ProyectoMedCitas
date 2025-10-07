@@ -10,6 +10,7 @@ import { CitaModule } from './cita/cita.module';
 import { Doctor } from './doctor/entities/doctor.entity';
 import { Paciente } from './paciente/entities/paciente.entity';
 import { Cita } from './cita/entities/cita.entity';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { Cita } from './cita/entities/cita.entity';
     DoctorModule,
     PacienteModule,
     CitaModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
