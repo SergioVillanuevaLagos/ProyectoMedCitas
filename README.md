@@ -2,15 +2,12 @@
 
 Este proyecto es una API para la gestión de citas médicas, pacientes, doctores y usuarios.
 
-# Tecnología
+## Tecnología
 
 - Backend: NestJS
-- Frontend: React
-- Base de datos: Postgres
+- Base de datos: PostgreSQL
 
 ## Endpoints Implementados
-
-
 
 ### 1. Crear un Paciente
 
@@ -43,8 +40,8 @@ GET http://localhost:3000/paciente
 [
   {
     "id": "uuid-generado",
-    "nombre": "ana",
-    "apellidos": "garcía",
+    "nombre": "Ana",
+    "apellidos": "García",
     "fechaNacimiento": "1990-05-15T00:00:00.000Z",
     "direccion": "Calle Falsa 123",
     "telefono": "555-1234",
@@ -85,6 +82,22 @@ POST http://localhost:3000/cita
   "fechaHora": "2023-12-01T10:00:00.000Z",
   "estado": "pendiente",
   "motivo": "Consulta general"
+}
+```
+
+### 5. Sembrar la Base de Datos
+
+```
+GET http://localhost:3000/seed
+```
+
+**Ejemplo de Respuesta:**
+Este endpoint inicializa la base de datos con datos de ejemplo para doctores, pacientes y citas.
+
+
+```json
+{
+  "message": "Seed ejecutada correctamente"
 }
 ```
 
