@@ -20,7 +20,7 @@ import { SeedModule } from './seed/seed.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
-      logging: true,
+      logging: false, 
     }),
     UsuarioModule,
     DoctorModule,
