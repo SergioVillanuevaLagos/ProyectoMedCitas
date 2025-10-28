@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Doctor } from '../doctor/entities/doctor.entity';
 import { Paciente } from '../paciente/entities/paciente.entity';
 import { Cita } from '../cita/entities/cita.entity';
+import { Administrador } from '../administrador/entities/administrador.entity';
 import { DOCTORES_SEED } from './data/doctor.seed';
 
 @Injectable()
@@ -17,13 +18,15 @@ export class SeedService {
     private readonly pacienteRepository: Repository<Paciente>,
     @InjectRepository(Cita)
     private readonly citaRepository: Repository<Cita>,
+    @InjectRepository(Administrador)
+    private readonly administradorRepository: Repository<Administrador>,
   ) {}
 
   async executeSeed(): Promise<string> {
     try {
       this.logger.log('Iniciando seed...');
 
-      // Eliminar todas las citas primero (porque tienen FK a doctores y pacientes)
+      // Eliminar todas las citas primero (porque tienen FK a doctores, pacientes y admins)
       const citas = await this.citaRepository.find();
       if (citas.length > 0) {
         await this.citaRepository.remove(citas);
@@ -44,7 +47,36 @@ export class SeedService {
         this.logger.log(`${doctores.length} doctores eliminados`);
       }
 
+      // Eliminar todos los administradores
+      const administradores = await this.administradorRepository.find();
+      if (administradores.length > 0) {
+        await this.administradorRepository.remove(administradores);
+        this.logger.log(`${administradores.length} administradores eliminados`);
+      }
+
       this.logger.log('Datos anteriores eliminados');
+
+      // Insertar administradores
+      const nuevosAdministradores: Administrador[] = [];
+      const administradoresData = [
+        {
+          nombre: 'Admin Principal',
+          email: 'admin@hospital.com',
+          contraseña: 'Admin123456',
+        },
+        {
+          nombre: 'Admin Secundario',
+          email: 'admin2@hospital.com',
+          contraseña: 'Admin123456',
+        },
+      ];
+
+      for (const adminData of administradoresData) {
+        const admin = this.administradorRepository.create(adminData);
+        const savedAdmin = await this.administradorRepository.save(admin);
+        nuevosAdministradores.push(savedAdmin);
+        this.logger.log(`Administrador creado: ${savedAdmin.nombre}`);
+      }
 
       // Insertar doctores desde los datos de seed
       const nuevosDoctores: Doctor[] = [];
@@ -137,7 +169,7 @@ export class SeedService {
       }
 
       this.logger.log('Seed ejecutada correctamente');
-      this.logger.log(`Total: ${nuevosDoctores.length} doctores, ${nuevosPacientes.length} pacientes, ${citasData.length} citas`);
+      this.logger.log(`Total: ${nuevosAdministradores.length} administradores, ${nuevosDoctores.length} doctores, ${nuevosPacientes.length} pacientes, ${citasData.length} citas`);
       
       return 'Seed ejecutada correctamente';
     } catch (error) {
