@@ -1,15 +1,34 @@
 # Proyecto Med Citas
 
-Este proyecto es una API para la gestión de citas médicas, pacientes, doctores y usuarios.
+Este proyecto es una API para la gestión de citas médicas, pacientes, doctores y administradores.
 
 ## Tecnología
 
 - Backend: NestJS
 - Base de datos: PostgreSQL
 
+## Instalación
+
+1. Instala las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+2. Configura la base de datos en el archivo `src/app.module.ts` y en `.env` si es necesario.
+
+3. Inicia el servidor en modo desarrollo:
+   ```bash
+   npm run start:dev
+   ```
+
+---
+
 ## Endpoints Implementados
 
-### 1. Crear un Paciente
+### **Paciente**
+
+#### 1. Crear un Paciente
 
 ```
 POST http://localhost:3000/paciente
@@ -28,31 +47,30 @@ POST http://localhost:3000/paciente
 }
 ```
 
-### 2. Obtener Todos los Pacientes
+#### 2. Obtener Todos los Pacientes
 
 ```
 GET http://localhost:3000/paciente
 ```
 
-**Ejemplo de Respuesta:**
+#### 3. Obtener un Paciente por ID
 
-```json
-[
-  {
-    "id": "uuid-generado",
-    "nombre": "Ana",
-    "apellidos": "García",
-    "fechaNacimiento": "1990-05-15T00:00:00.000Z",
-    "direccion": "Calle Falsa 123",
-    "telefono": "555-1234",
-    "email": "ana.garcia@example.com",
-    "updatedAt": 1690000000000,
-    "citas": []
-  }
-]
+```
+GET http://localhost:3000/paciente/:id
 ```
 
-### 3. Crear un Doctor
+
+#### 4. Eliminar un Paciente
+
+```
+DELETE http://localhost:3000/paciente/:id
+```
+
+---
+
+### **Doctor**
+
+#### 1. Crear un Doctor
 
 ```
 POST http://localhost:3000/doctor
@@ -63,11 +81,36 @@ POST http://localhost:3000/doctor
 ```json
 {
   "nombre": "Dr. López",
-  "especialidad": "Cardiología"
+  "especialidad": "Cardiología",
+  "horasLibres": "2"
 }
 ```
 
-### 4. Crear una Cita
+#### 2. Obtener Todos los Doctores
+
+```
+GET http://localhost:3000/doctor
+```
+
+#### 3. Obtener un Doctor por ID
+
+```
+GET http://localhost:3000/doctor/:id
+```
+
+
+
+#### 4. Eliminar un Doctor
+
+```
+DELETE http://localhost:3000/doctor/:id
+```
+
+---
+
+### **Cita**
+
+#### 1. Crear una Cita
 
 ```
 POST http://localhost:3000/cita
@@ -85,25 +128,79 @@ POST http://localhost:3000/cita
 }
 ```
 
-### 5. Sembrar la Base de Datos
+#### 2. Obtener Todas las Citas
+
+```
+GET http://localhost:3000/cita
+```
+
+#### 3. Obtener una Cita por ID
+
+```
+GET http://localhost:3000/cita/:id
+```
+
+
+
+#### 4. Eliminar una Cita
+
+```
+DELETE http://localhost:3000/cita/:id
+```
+
+---
+
+### **Administrador**
+
+#### 1. Crear un Administrador
+
+```
+POST http://localhost:3000/administrador
+```
+
+**Ejemplo de Cuerpo de la Solicitud:**
+
+```json
+{
+  "nombre": "Admin Principal",
+  "email": "admin@hospital.com",
+  "contraseña": "Admin123456"
+}
+```
+
+#### 2. Obtener Todos los Administradores
+
+```
+GET http://localhost:3000/administrador
+```
+
+#### 3. Obtener un Administrador por ID
+
+```
+GET http://localhost:3000/administrador/:id
+```
+
+
+#### 4. Eliminar un Administrador
+
+```
+DELETE http://localhost:3000/administrador/:id
+```
+
+---
+
+### **Seed (Datos de Prueba)**
+
+#### Sembrar la Base de Datos
 
 ```
 GET http://localhost:3000/seed
 ```
 
-**Ejemplo de Respuesta:**
-Este endpoint inicializa la base de datos con datos de ejemplo para doctores, pacientes y citas.
-
+**Respuesta:**
 
 ```json
-{
-  "message": "Seed ejecutada correctamente"
-}
+"Seed ejecutada correctamente"
 ```
 
-## Instalación
-
-1. Clona el repositorio.
-2. Instala las dependencias con `npm install`.
-3. Configura la base de datos en el archivo `src/app.module.ts`.
-4. Inicia el servidor con `npm run start:dev`.
+Este endpoint inicializa la base de datos con datos de ejemplo para doctores, pacientes y citas.

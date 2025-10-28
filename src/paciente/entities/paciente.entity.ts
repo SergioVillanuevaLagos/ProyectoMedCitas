@@ -1,36 +1,44 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Cita } from '../../cita/entities/cita.entity';
+import { Administrador } from '../../administrador/entities/administrador.entity';
 
 @Entity()
 export class Paciente {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100, nullable: true })
   nombre: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100, nullable: true })
   apellidos: string;
 
-  @Column('date')
+  @Column({ type: 'date' })
   fechaNacimiento: Date;
 
-  @Column()
+  @Column({ type: 'varchar', length: 200 })
   direccion: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 20 })
   telefono: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   email: string;
 
-  @CreateDateColumn()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @OneToMany(() => Cita, cita => cita.paciente)
+  @Column({ type: 'uuid', nullable: true })
+  admin_id: string;
+
+  @ManyToOne(() => Administrador, (administrador) => administrador.pacientes)
+  @JoinColumn({ name: 'admin_id' })
+  administrador: Administrador;
+
+  @OneToMany(() => Cita, (cita) => cita.paciente)
   citas: Cita[];
 }
 

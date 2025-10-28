@@ -8,6 +8,7 @@ export class UpdatePacienteDto extends PartialType(CreatePacienteDto) {
         id: string;
 
         @IsString()
+
         nombre: string;
     
         @IsString()

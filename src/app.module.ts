@@ -3,11 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsuarioModule } from './usuario/usuario.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { PacienteModule } from './paciente/paciente.module';
 import { CitaModule } from './cita/cita.module';
 import { SeedModule } from './seed/seed.module';
+import { AdministradorModule } from './administrador/administrador.module';
 
 @Module({
   imports: [
@@ -22,11 +22,11 @@ import { SeedModule } from './seed/seed.module';
       ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
       logging: false, 
     }),
-    UsuarioModule,
     DoctorModule,
     PacienteModule,
     CitaModule,
     SeedModule,
+    AdministradorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
