@@ -26,14 +26,12 @@ export class SeedService {
     try {
       this.logger.log('Iniciando seed...');
 
-      // Eliminar todas las citas primero (porque tienen FK a doctores, pacientes y admins)
       const citas = await this.citaRepository.find();
       if (citas.length > 0) {
         await this.citaRepository.remove(citas);
         this.logger.log(`${citas.length} citas eliminadas`);
       }
 
-      // Eliminar todos los pacientes
       const pacientes = await this.pacienteRepository.find();
       if (pacientes.length > 0) {
         await this.pacienteRepository.remove(pacientes);
@@ -47,7 +45,6 @@ export class SeedService {
         this.logger.log(`${doctores.length} doctores eliminados`);
       }
 
-      // Eliminar todos los administradores
       const administradores = await this.administradorRepository.find();
       if (administradores.length > 0) {
         await this.administradorRepository.remove(administradores);
@@ -56,7 +53,6 @@ export class SeedService {
 
       this.logger.log('Datos anteriores eliminados');
 
-      // Insertar administradores
       const nuevosAdministradores: Administrador[] = [];
       const administradoresData = [
         {
@@ -78,7 +74,6 @@ export class SeedService {
         this.logger.log(`Administrador creado: ${savedAdmin.nombre}`);
       }
 
-      // Insertar doctores desde los datos de seed
       const nuevosDoctores: Doctor[] = [];
       for (const doctorData of DOCTORES_SEED) {
         const doctor = this.doctorRepository.create(doctorData);
@@ -87,7 +82,6 @@ export class SeedService {
         this.logger.log(`Doctor creado: ${savedDoctor.nombre}`);
       }
 
-      // Insertar pacientes
       const nuevosPacientes: Paciente[] = [];
       const pacientesData = [
         {

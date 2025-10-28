@@ -22,14 +22,12 @@ export class DoctorRepository {
         return Doctor;
     }
     async create(createDoctor: CreateDoctorDto): Promise<Doctor> {
-        //TypeORM ya genera el UUID automáticamente
         const Doctor = this.doctRepo.create(createDoctor);
         return await this.doctRepo.save(Doctor);
     }
     async update(id: string, updateDocDto: UpdateDoctorDto): Promise<Doctor> {
         const Doctor = await this.findOneById(id);
 
-        //merge datos nuevos con los anteriores
         const updatedDoc = this.doctRepo.merge(Doctor, updateDocDto);
         return await this.doctRepo.save(updatedDoc);
     }

@@ -25,7 +25,6 @@ export class PacienteService {
   }
 
   async update(id: string, updatePacienteDto: UpdatePacienteDto): Promise<Paciente> {
-    // No incluir updatedAt - TypeORM lo maneja automáticamente con @UpdateDateColumn
     const paciente = await this.pacienteRepository.update(id, updatePacienteDto);
     if (!paciente) {
       throw new NotFoundException(`Paciente with id ${id} not found`);
