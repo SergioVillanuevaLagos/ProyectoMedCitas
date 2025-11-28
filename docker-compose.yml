@@ -1,0 +1,21 @@
+# Nombre del archivo: docker-compose.yml
+version: '3.8'
+
+services:
+  api:
+    container_name: nestjs_supabase_project
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app             # Sincroniza tu código para ver cambios en vivo
+      - /app/node_modules  # Protege la carpeta node_modules del contenedor
+    env_file:
+      - .env               # Carga la conexión a Supabase
+    restart: always
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
