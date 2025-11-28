@@ -24,6 +24,160 @@ Este proyecto es una API para la gestión de citas médicas, pacientes, doctores
 
 ---
 
+## Seguridad y Autenticación
+
+Este proyecto implementa un sistema de autenticación y autorización basado en **JWT (JSON Web Tokens)** con control de roles.
+
+### **Características de Seguridad**
+
+#### 1. Autenticación con JWT
+
+El sistema utiliza **Passport JWT** para proteger las rutas y gestionar la autenticación de usuarios.
+
+#### 2. Encriptación de Contraseñas
+
+Las contraseñas se encriptan usando **bcrypt** con un salt de 10 rounds antes de almacenarse en la base de datos.
+
+#### 3. Roles de Usuario
+
+El sistema maneja tres roles diferentes:
+
+- `administrador`: Acceso completo al sistema
+- `doctor`: Acceso para gestionar citas y consultas
+- `paciente`: Acceso limitado a sus propias citas
+
+#### 4. Validación de Contraseñas
+
+Las contraseñas deben cumplir con los siguientes requisitos:
+
+- Mínimo 6 caracteres
+- Máximo 50 caracteres
+- Al menos una letra mayúscula
+- Al menos una letra minúscula
+- Al menos un número o carácter especial
+
+### **Endpoints de Autenticación**
+
+#### 1. Registrar un Usuario
+
+```
+POST http://localhost:3000/auth/register
+```
+
+**Ejemplo de Cuerpo de la Solicitud:**
+
+```json
+{
+  "email": "usuario@example.com",
+  "password": "Password123",
+  "fullName": "Juan Pérez"
+}
+```
+
+**Respuesta:**
+
+```json
+{
+  "id": "uuid-usuario",
+  "email": "usuario@example.com",
+  "fullName": "Juan Pérez",
+  "isActive": true,
+  "roles": ["paciente"],
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### 2. Iniciar Sesión
+
+```
+POST http://localhost:3000/auth/login
+```
+
+**Ejemplo de Cuerpo de la Solicitud:**
+
+```json
+{
+  "email": "usuario@example.com",
+  "password": "Password123"
+}
+```
+
+**Respuesta:**
+
+```json
+{
+  "id": "uuid-usuario",
+  "email": "usuario@example.com",
+  "fullName": "Juan Pérez",
+  "isActive": true,
+  "roles": ["paciente"],
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### 3. Verificar Estado de Autenticación
+
+```
+GET http://localhost:3000/auth/check-status
+```
+
+**Headers:**
+
+```
+Authorization: Bearer <token>
+```
+
+**Respuesta:**
+
+```json
+{
+  "id": "uuid-usuario",
+  "email": "usuario@example.com",
+  "fullName": "Juan Pérez",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+### **Protección de Rutas**
+
+#### Uso del Decorador `@Auth()`
+
+Para proteger una ruta y restringirla por roles, utiliza el decorador `@Auth()`:
+
+```typescript
+@Get('private')
+@Auth()
+getPrivateData() {
+  return { message: 'Datos privados' };
+}
+
+@Get('admin')
+@Auth(ValidRoles.administrador)
+getAdminData() {
+  return { message: 'Solo administradores' };
+}
+
+@Get('medical')
+@Auth(ValidRoles.doctor, ValidRoles.administrador)
+getMedicalData() {
+  return { message: 'Solo personal médico' };
+}
+```
+
+#### Obtener Usuario Actual
+
+Usa el decorador `@GetUser()` para obtener el usuario autenticado:
+
+```typescript
+@Get('profile')
+@Auth()
+getProfile(@GetUser() user: User) {
+  return user;
+}
+```
+
+---
+
 ## Endpoints Implementados
 
 ### **Paciente**
@@ -58,7 +212,6 @@ GET http://localhost:3000/paciente
 ```
 GET http://localhost:3000/paciente/:id
 ```
-
 
 #### 4. Eliminar un Paciente
 
@@ -97,8 +250,6 @@ GET http://localhost:3000/doctor
 ```
 GET http://localhost:3000/doctor/:id
 ```
-
-
 
 #### 4. Eliminar un Doctor
 
@@ -140,8 +291,6 @@ GET http://localhost:3000/cita
 GET http://localhost:3000/cita/:id
 ```
 
-
-
 #### 4. Eliminar una Cita
 
 ```
@@ -179,7 +328,6 @@ GET http://localhost:3000/administrador
 ```
 GET http://localhost:3000/administrador/:id
 ```
-
 
 #### 4. Eliminar un Administrador
 
