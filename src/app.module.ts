@@ -8,6 +8,7 @@ import { PacienteModule } from './paciente/paciente.module';
 import { CitaModule } from './cita/cita.module';
 import { SeedModule } from './seed/seed.module';
 import { AdministradorModule } from './administrador/administrador.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,15 +21,16 @@ import { AdministradorModule } from './administrador/administrador.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
-      logging: false, 
+      logging: false,
     }),
     DoctorModule,
     PacienteModule,
     CitaModule,
     SeedModule,
     AdministradorModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
