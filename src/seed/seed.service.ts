@@ -20,7 +20,7 @@ export class SeedService {
     private readonly citaRepository: Repository<Cita>,
     @InjectRepository(Administrador)
     private readonly administradorRepository: Repository<Administrador>,
-  ) {}
+  ) { }
 
   async executeSeed(): Promise<string> {
     try {
@@ -54,24 +54,13 @@ export class SeedService {
       this.logger.log('Datos anteriores eliminados');
 
       const nuevosAdministradores: Administrador[] = [];
-      const administradoresData = [
-        {
-          nombre: 'Admin Principal',
-          email: 'admin@hospital.com',
-          contraseña: 'Admin123456',
-        },
-        {
-          nombre: 'Admin Secundario',
-          email: 'admin2@hospital.com',
-          contraseña: 'Admin123456',
-        },
-      ];
+      const administradoresCount = 2; // Número de administradores a crear
 
-      for (const adminData of administradoresData) {
-        const admin = this.administradorRepository.create(adminData);
+      for (let i = 0; i < administradoresCount; i++) {
+        const admin = this.administradorRepository.create({});
         const savedAdmin = await this.administradorRepository.save(admin);
         nuevosAdministradores.push(savedAdmin);
-        this.logger.log(`Administrador creado: ${savedAdmin.nombre}`);
+        this.logger.log(`Administrador creado: ${savedAdmin.id}`);
       }
 
       const nuevosDoctores: Doctor[] = [];
@@ -79,34 +68,25 @@ export class SeedService {
         const doctor = this.doctorRepository.create(doctorData);
         const savedDoctor = await this.doctorRepository.save(doctor);
         nuevosDoctores.push(savedDoctor);
-        this.logger.log(`Doctor creado: ${savedDoctor.nombre}`);
+        this.logger.log(`Doctor creado con especialidad: ${savedDoctor.especialidad}`);
       }
 
       const nuevosPacientes: Paciente[] = [];
       const pacientesData = [
         {
-          nombre: 'Ana',
-          apellidos: 'García',
           fechaNacimiento: new Date('1990-05-15'),
           direccion: 'Calle Falsa 123',
           telefono: '555-1234',
-          email: 'ana.garcia@example.com',
         },
         {
-          nombre: 'Carlos',
-          apellidos: 'Rodríguez',
           fechaNacimiento: new Date('1985-08-20'),
           direccion: 'Avenida Principal 456',
           telefono: '555-5678',
-          email: 'carlos.rodriguez@example.com',
         },
         {
-          nombre: 'María',
-          apellidos: 'López',
           fechaNacimiento: new Date('1992-03-10'),
           direccion: 'Calle Secundaria 789',
           telefono: '555-9012',
-          email: 'maria.lopez@example.com',
         },
       ];
 
@@ -114,7 +94,7 @@ export class SeedService {
         const paciente = this.pacienteRepository.create(pacienteData);
         const savedPaciente = await this.pacienteRepository.save(paciente);
         nuevosPacientes.push(savedPaciente);
-        this.logger.log(`Paciente creado: ${savedPaciente.nombre} ${savedPaciente.apellidos}`);
+        this.logger.log(`Paciente creado: ${savedPaciente.id}`);
       }
 
       // Insertar citas
@@ -164,7 +144,7 @@ export class SeedService {
 
       this.logger.log('Seed ejecutada correctamente');
       this.logger.log(`Total: ${nuevosAdministradores.length} administradores, ${nuevosDoctores.length} doctores, ${nuevosPacientes.length} pacientes, ${citasData.length} citas`);
-      
+
       return 'Seed ejecutada correctamente';
     } catch (error) {
       this.logger.error('Error ejecutando el seed', error.stack);

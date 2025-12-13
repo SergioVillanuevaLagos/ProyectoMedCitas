@@ -7,6 +7,9 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { Paciente } from '../paciente/entities/paciente.entity';
+import { Administrador } from '../administrador/entities/administrador.entity';
+import { Doctor } from '../doctor/entities/doctor.entity';
 
 @Module({
     controllers: [AuthController],
@@ -14,7 +17,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     imports: [
         ConfigModule,
 
-        TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forFeature([User, Paciente, Administrador, Doctor]),
 
         PassportModule.register({ defaultStrategy: 'jwt' }),
 

@@ -9,9 +9,6 @@ export class Doctor {
   id: string;
 
   @Column({ type: 'varchar', length: 100 })
-  nombre: string;
-
-  @Column({ type: 'varchar', length: 100 })
   especialidad: string;
 
   @Column({ type: 'varchar', nullable: true })

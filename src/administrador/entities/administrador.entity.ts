@@ -9,15 +9,6 @@ export class Administrador {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  nombre: string;
-
-  @Column({ type: 'varchar', length: 100, unique: true, nullable: true })
-  email: string; // Nota: Considerar usar solo el email de User
-
-  @Column({ type: 'varchar', nullable: true })
-  contraseña: string; // Nota: Considerar usar solo la contraseña de User
-
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

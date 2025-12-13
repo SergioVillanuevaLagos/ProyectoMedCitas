@@ -10,18 +10,11 @@ export class AdministradorService {
   constructor(
     @InjectRepository(Administrador)
     private readonly administradorRepository: Repository<Administrador>,
-  ) {}
+  ) { }
 
   async create(createAdministradorDto: CreateAdministradorDto): Promise<Administrador> {
-    const existingAdmin = await this.administradorRepository.findOne({
-      where: { email: createAdministradorDto.email },
-    });
-
-    if (existingAdmin) {
-      throw new ConflictException('El email ya está registrado');
-    }
-
-    const administrador = this.administradorRepository.create(createAdministradorDto);
+    // La validación de email duplicado ahora se hace en la tabla users
+    const administrador = this.administradorRepository.create({});
 
     return await this.administradorRepository.save(administrador);
   }

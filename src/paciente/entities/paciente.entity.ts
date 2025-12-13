@@ -8,12 +8,6 @@ export class Paciente {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  nombre: string;
-
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  apellidos: string;
-
   @Column({ type: 'date' })
   fechaNacimiento: Date;
 
@@ -22,9 +16,6 @@ export class Paciente {
 
   @Column({ type: 'varchar', length: 20 })
   telefono: string;
-
-  @Column({ type: 'varchar', length: 100 })
-  email: string; // Nota: Considerar usar solo el email de User
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

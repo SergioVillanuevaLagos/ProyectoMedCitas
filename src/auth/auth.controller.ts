@@ -5,6 +5,9 @@ import { Auth, GetUser, RawHeaders } from './decorators';
 import { RoleProtected } from './decorators/role-protected.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterPacienteDto } from './dto/register-paciente.dto';
+import { RegisterAdministradorDto } from './dto/register-administrador.dto';
+import { RegisterDoctorDto } from './dto/register-doctor.dto';
 import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { ValidRoles } from './interfaces/valid-roles';
@@ -16,6 +19,21 @@ export class AuthController {
     @Post('register')
     create(@Body() createUserDto: CreateUserDto) {
         return this.authService.create(createUserDto);
+    }
+
+    @Post('register/paciente')
+    registerPaciente(@Body() registerPacienteDto: RegisterPacienteDto) {
+        return this.authService.registerPaciente(registerPacienteDto);
+    }
+
+    @Post('register/administrador')
+    registerAdministrador(@Body() registerAdministradorDto: RegisterAdministradorDto) {
+        return this.authService.registerAdministrador(registerAdministradorDto);
+    }
+
+    @Post('register/doctor')
+    registerDoctor(@Body() registerDoctorDto: RegisterDoctorDto) {
+        return this.authService.registerDoctor(registerDoctorDto);
     }
 
     @Post('login')
